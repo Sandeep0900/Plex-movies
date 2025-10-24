@@ -6,39 +6,44 @@ const TrailerModal = ({ query, onClose }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  useEffect(() => {
-    const fetchYouTubeTrailer = async () => {
-      setLoading(true);
-      setError(false);
-      try {
-        const res = await fetch(`https://plex-movies-backend.onrender.com/api/trailer?q=${encodeURIComponent(query)}`);
-        const data = await res.json();
-        console.log("YouTube API response:", data);
+useEffect(() => {
+  const fetchYouTubeTrailer = async () => {
+    setLoading(true);
+    setError(false);
+    try {
+      const res = await fetch(`https://plex-movies-backend.onrender.com/api/trailer?q=${encodeURIComponent(query)}`);
+      const data = await res.json();
+      console.log("YouTube API response:", data);
 
-        const videoItem = data.items?.[0];
-        const videoId = videoItem?.id?.videoId;
+      const videoItem = data.items?.[0];
+      const videoId = videoItem?.id?.videoId;
 
-        if (!videoId) {
-          console.error("No videoId found in response", videoItem);
-          setVideoUrl("");
-          setError(true);
-        } else {
-          // Use the embed format which works better with ReactPlayer
-          setVideoUrl(`https://www.youtube.com/watch?v=${videoId}`);
-        }
-      } catch (error) {
-        console.error("Error fetching trailer:", error);
-        setVideoUrl("");
-        setError(true);
-      } finally {
-        setLoading(false);
-      }
-    };
+      console.log("Video ID:", videoId);
 
-    if (query) {
-      fetchYouTubeTrailer();
+if (!videoId) {
+  console.error("No videoId found in response", videoItem);
+  setVideoUrl("");
+  setError(true);
+} else {
+  const newUrl = `https://www.youtube.com/watch?v=${videoId}`;
+  console.log("Video URL:", newUrl);
+  console.log("ReactPlayer can play:", ReactPlayer.canPlay(newUrl)); // ✅ Add this line
+  setVideoUrl(newUrl);
+}
+    } catch (error) {
+      console.error("Error fetching trailer:", error);
+      setVideoUrl("");
+      setError(true);
+    } finally {
+      setLoading(false);
     }
-  }, [query]);
+  };
+
+  if (query) {
+    fetchYouTubeTrailer();
+  }
+}, [query]);
+
 
   return (
     <div 
@@ -74,22 +79,32 @@ const TrailerModal = ({ query, onClose }) => {
             </div>
           ) : (
             <div className="absolute inset-0">
-              <ReactPlayer 
-                url={videoUrl} 
-                controls 
-                width="100%" 
-                height="100%"
-                playing
-                config={{
-                  youtube: {
-                    playerVars: { 
-                      autoplay: 1,
-                      modestbranding: 1,
-                      rel: 0
-                    }
-                  }
-                }}
-              />
+        <ReactPlayer 
+          url={videoUrl}
+          controls
+          width="100%"
+          height="100%"
+          playing
+          muted
+          onReady={() => {
+            console.log("ReactPlayer is ready and playing");
+            setError(false); // We are ready, so no error
+          }}
+          onError={(e) => {
+            console.error("ReactPlayer error:", e);
+            setError(true);
+          }}
+          config={{
+            youtube: {
+              playerVars: {
+                autoplay: 1,
+                modestbranding: 1,
+                rel: 0,
+              },
+            },
+          }}
+        />  
+
             </div>
           )}
         </div>

@@ -1,16 +1,38 @@
-# React + Vite
+# 🎬 Plex Movie Search + YouTube Trailer Viewer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive React web app that allows users to **search for movies and shows** using the **Plex Discover API** and instantly **watch trailers from YouTube**.  
+Built with **React**, **Tailwind CSS**, and a secure **Node.js backend** to fetch trailer data safely via the **YouTube Data API v3**.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
+- 🔍 Search for any movie or TV show using the Plex Discover API  
+- 🎞 View trailers directly from YouTube (via backend proxy)  
+- 💎 Modern, clean, and fully responsive UI using Tailwind CSS  
+- ⚡ Fast and lightweight React frontend  
+- 🔐 Secure backend (Node.js + Express) to hide API keys  
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🧰 Tech Stack
+**Frontend:**
+- React.js  
+- Tailwind CSS  
+- Axios  
+- React Player  
 
-## Expanding the ESLint configuration
+**Backend:**
+- Node.js  
+- Express.js  
+- Axios  
+- CORS  
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🪜 Setup Guide
+
+### 1️⃣ Clone the Repository
+```bash
+git clone https://github.com/yourusername/plex-movie-search.git
+cd plex-movie-search
+```
